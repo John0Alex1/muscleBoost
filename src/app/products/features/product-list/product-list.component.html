@@ -1,1 +1,22 @@
-<p>product-list works!</p>
+<div class="mx-auto max-w-screen-xl mb-10">
+    <app-product-slider/>
+</div>
+<!-- Sección con fondo blanco -->
+<div class="bg-white py-10">
+    <div class="mx-auto max-w-screen-xl text-center">
+        <h2 class="text-3xl font-bold text-gray-900">Descubre Nuestros Productos</h2>
+        <p class="text-gray-600 mt-2">Encuentra suplementos, accesorios y más para mejorar tu rendimiento.</p>
+    </div>
+
+    <div class="mx-auto max-w-screen-xl mt-8">
+        @if (productsState.state().status === 'loading') {
+            <p class="text-center text-gray-600">Cargando productos...</p>
+        } @else {
+            <div class="grid grid-cols-[repeat(4,300px)] gap-4">
+                @for (product of productsState.state().products; track product) {
+                    <app-product-card class="block" [product]="product"/>
+                }
+            </div>
+        }
+    </div>
+</div>

@@ -2,28 +2,29 @@ import { inject, Injectable } from "@angular/core";
 import { signalSlice } from 'ngxtension/signal-slice';
 import { Product } from "../../shared/interface/product.interface";
 import { ProductService } from "./products.service";
-import { map } from "rxjs";
+import { map, Observable, switchMap } from "rxjs";
 
 interface State{
-    products: Product[],
+    product: Product | null,
     status: 'loading' | 'success' | 'error',
 }
 
 @Injectable()
-export class ProductStateService {
+export class ProductDetailsStateService {
 
     private productService = inject(ProductService);
     private initialState: State = {
-        products: [],
+        product: null,
         status: 'loading' as const
     };
-
     state = signalSlice({
         initialState: this.initialState,
-        sources: [
-            this.productService.getProducts()
-                .pipe(map((response) => ({ products: response, status: 'success' as const })))
-        ]
-    });
-    
+        actionSources: {
+          getById: (_state, $: Observable<string>) =>
+            $.pipe(
+              switchMap((id) => this.productService.getProduct(id)),
+              map((data) => ({ product: data, status: 'success' as const })),
+            ),
+        },
+      });
 }

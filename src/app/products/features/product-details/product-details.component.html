@@ -1,1 +1,59 @@
-<p>product-details works!</p>
+@if (productDetailsState.status() === "loading") {
+  <div class="loading">Loading...</div>
+} @else {
+  <section class="py-12 bg-white md:py-20 dark:bg-white antialiased">
+    <div class="max-w-screen-xl px-6 mx-auto 2xl:px-0">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-12 xl:gap-16 items-center">
+        
+        <!-- Imagen del producto más pequeña -->
+        <div class="shrink-0 max-w-sm mx-auto">
+          <img
+            class="w-full h-auto rounded-lg shadow-md"
+            [src]="productDetailsState.product()?.image"
+            alt="{{ productDetailsState.product()?.title }}"
+          />
+        </div>
+  
+        <!-- Información del producto -->
+        <div class="mt-8 sm:mt-10 lg:mt-0">
+          <h1 class="text-3xl font-bold text-gray-800 sm:text-4xl">
+            {{ productDetailsState.product()?.title }}
+          </h1>
+  
+          <!-- Precio -->
+          <div class="mt-4 flex items-center gap-4">
+            <p class="text-4xl font-extrabold text-blue-600">
+              {{ productDetailsState.product()?.price | currency }}
+            </p>
+          </div>
+  
+          <!-- Botón Agregar al carrito -->
+          <div class="mt-8 flex items-center">
+            <button
+              class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-6 py-3 transition-all flex items-center justify-center shadow-md focus:outline-none"
+              role="button"
+            >
+              <svg class="w-6 h-6 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
+                />
+              </svg>
+              Agregar al carrito
+            </button>
+          </div>
+  
+          <hr class="my-8 border-gray-300" />
+  
+          <!-- Descripción del producto -->
+          <p class="text-lg text-gray-600 leading-relaxed">
+            {{ productDetailsState.product()?.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+}
